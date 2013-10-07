@@ -1,0 +1,29 @@
+LABEL clonezilla-restore
+    MENU LABEL Clonezilla-Restore
+    KERNEL clonezilla/vmlinuz
+    APPEND initrd=clonezilla/initrd.img boot=live <%
+%>    config noswap nolocales edd=on nomodeset <%
+%>    ocs_prerun1="sudo mount -t nfs <%= @serverip %>:/media/clonezilla /home/partimag" <%
+%>    ocs_live_run="sudo ocs-sr restoredisk ask_user ask_user" <%
+%>    ocs_live_extra_param="" <%
+%>    ocs_postrun1="sleep 10" <%
+%>    keyboard-layouts="de" <%
+%>    locales=de_DE@UTF-8 <%
+%>    ocs_live_batch="no" <%
+%>    nosplash noprompt <%
+%>    fetch=tftp://<%= @serverip %>/clonezilla/filesystem.squashfs
+
+LABEL clonezilla
+    MENU LABEL Clonezilla
+    KERNEL clonezilla/vmlinuz
+    APPEND initrd=clonezilla/initrd.img boot=live <%
+%>    config noswap nolocales edd=on nomodeset <%
+%>    ocs_prerun1="sudo mount -t nfs <%= @serverip %>:/media/clonezilla /home/partimag" <%
+%>    ocs_live_run="sudo ocs-live-general" <%
+%>    ocs_live_extra_param="" <%
+%>    keyboard-layouts="de" <%
+%>    locales="" <%
+%>    ocs_live_batch="no" <%
+%>    nosplash noprompt <%
+%>    fetch=tftp://<%= @serverip %>/clonezilla/filesystem.squashfs
+
