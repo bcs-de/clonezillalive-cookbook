@@ -1,68 +1,54 @@
 clonezillalive Cookbook
 =======================
-TODO: Enter the cookbook description here.
 
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
+Deploy Clonezilla-Live for network-booting.
+
+Clonezilla then allows to save and restore images of hard-disks.
+
+If the image is for windows and prepared for example with sysprep, it can be
+used to install several machines over and over again.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
-#### packages
-- `toaster` - clonezillalive needs toaster to brown your bagel.
+The development of this cookbook happens on debian wheezy (7.1), which makes
+this the supported platform.
+
+#### cookbooks
+ - `tftp`: For the booting
+ - `nfs`: For the image store
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
 
-e.g.
-#### clonezillalive::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['clonezillalive']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+[None yet]
+
 
 Usage
 -----
 #### clonezillalive::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
-Just include `clonezillalive` in your node's `run_list`:
+This recipe does nothing. Its there to play it safe if I want to add providers
+and resources to this cookbook.
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[clonezillalive]"
-  ]
-}
-```
+#### clonezillalive::server
+
+This recipe grabs the clonezilla live image and unpacks the files needed for
+network-boot. Then it installs tftp and syslinux and configures pxe-booting for
+the clonezilla image.
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
-e.g.
+Standard opensource cookbook rules apply:
+
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
+4. <del>Write tests for your change (if applicable)</del>
+5. <del>Run the tests, ensuring they all pass</del>
 6. Submit a Pull Request using Github
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: Arnold Krille (for bcs kommunikationslösungen)
