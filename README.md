@@ -21,8 +21,9 @@ this the supported platform.
 Attributes
 ----------
 
-[None yet]
-
+#### node\['clonezilla'\]\['serverip'\] = nil
+If the server is reachable via two (or more) interfaces, use the given address
+for the clients to boot from. If not given, node\['ipaddress'\] is used. 
 
 Usage
 -----

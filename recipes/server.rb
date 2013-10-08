@@ -53,7 +53,7 @@ end
     source "pxeconfig.cfg/#{file}.erb"
     mode 0755
     variables({
-      :serverip => node['ipaddress'],
+      :serverip => (node['clonezilla']['serverip'] or node['ipaddress']),
       #:x2gotce_base => x2gotce_base
     })
   end
