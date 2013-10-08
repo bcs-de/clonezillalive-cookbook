@@ -42,8 +42,9 @@ end
 end
 
 ['pxelinux.0', 'vesamenu.c32'].each do |file|
-  file "#{tftpdir}/#{file}" do
-    content IO.read("/usr/lib/syslinux/#{file}")
+  execute "place #{file}" do
+    command "cp /usr/lib/syslinux/#{file} #{tftpdir}"
+    creates "#{tftpdir}/#{file}"
   end
 end
 
