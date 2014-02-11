@@ -10,11 +10,14 @@ provides         'clonezillalive::default'
 provides         'clonezillalive::server'
 
 attribute        'clonezilla/serverip',
-                 :display_name => 'Server IP',
-                 :description => 'Set a special ip for the clients to use when booting. For example if your server lives in two networks and clients should use the second interfaces ip-address. node[\'ipaddress\'] is used if this is unset.',
-                 :type => 'string',
-                 :required => 'optional',
-                 :default => nil
+                 display_name: 'Server IP',
+                 description: 'Set a special ip for the clients to use when '\
+                   'booting. For example if your server lives in two networks'\
+                   ' and clients should use the second interfaces ip-address.'\
+                   ' node[\'ipaddress\'] is used if this is unset.',
+                 type: 'string',
+                 required: 'optional',
+                 default: nil
 
 supports         'debian', '>= 7.0'
 
