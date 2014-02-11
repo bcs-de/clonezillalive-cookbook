@@ -74,9 +74,9 @@ pxe_menu 'clonezillalive-restoredisk' do
   initrd 'clonezilla/initrd.img'
   append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{serverip}:/media/clonezilla /home/partimag -o ro\" " \
-    'ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true ' \
-    'restoredisk ask_user ask_user\" ocs_live_extra_param=\"\" ' \
-    'ocs_live_batch=\"yes\" ' \
+    "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
+    "restoredisk ask_user ask_user\" ocs_live_extra_param=\"\" " \
+    "ocs_live_batch=\"yes\" " \
     "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
 end
 
@@ -87,9 +87,9 @@ pxe_menu 'clonezilla-restoreparts' do
   initrd 'clonezilla/initrd.img'
   append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{serverip}:/media/clonezilla /home/partimag -o ro\" " \
-    'ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true ' \
-    'restoreparts ask_user ask_user\" ocs_live_extra_param=\"\" ' \
-    'ocs_live_batch=\"yes\" ' \
+    "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
+    "restoreparts ask_user ask_user\" ocs_live_extra_param=\"\" " \
+    "ocs_live_batch=\"yes\" " \
     "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
 end
 
@@ -100,8 +100,8 @@ pxe_menu 'clonezillalive' do
   initrd 'clonezilla/initrd.img'
   append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{serverip}:/media/clonezilla /home/partimag -o rw\" " \
-    'ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" ' \
-    'ocs_postrun1=\"sleep 10\" ocs_live_batch=\"no\" ' \
+    "ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" " \
+    "ocs_postrun1=\"sleep 10\" ocs_live_batch=\"no\" " \
     "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
 end
 
