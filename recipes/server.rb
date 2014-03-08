@@ -52,9 +52,9 @@ end
 #
 
 if node['clonezilla']['debug_boot']
-  node.set['pxe']['appendline'] = "#{node['pxe']['node['pxe']['appendline']']} nosplash"
+  node.set['pxe']['appendline'] = "#{node['pxe']['appendline']']} nosplash"
 else
-  node.set['pxe']['appendline'] = "#{node['pxe']['node['pxe']['appendline']']} quiet"
+  node.set['pxe']['appendline'] = "#{node['pxe']['appendline']']} quiet"
 end
 
 pxe_menu 'clonezillalive-restoredisk' do
