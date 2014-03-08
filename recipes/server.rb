@@ -19,52 +19,42 @@
 #
 
 include_recipe('pxe::default')
-tftpdir = node['tftp']['directory']
 
 package 'unzip'
 
-node.default['nfs']['service']['portmap'] = 'rpcbind'
 include_recipe('nfs::server')
-
-czver = '2.1.2-43'
-czzip = "clonezilla-live-#{czver}-i686-pae.zip"
-czurl = 'http://sourceforge.net/projects/clonezilla/files/' \
-        "clonezilla_live_stable/#{czver}/#{czzip}/download"
 
 ## Clonezilla image
 #
 ['clonezilla'].each do |dir|
-  directory "#{tftpdir}/#{dir}" do
+  directory "#{node['tftp']['directory']}/#{dir}" do
     action :create
     mode 0755
   end
 end
 
-remote_file "#{Chef::Config[:file_cache_path]}/#{czzip}" do
-  source czurl
-  checksum '3ab39169a1fdbdc89e61b943e8a7f39374babd53'
+remote_file "#{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']}" do
+  source "#{node['clonezilla']['url']}"
+  checksum "#{node['clonezilla']['checksum']}"
   mode 00644
-  not_if { ::File.exists?("#{Chef::Config[:file_cache_path]}/#{czzip}") }
+  not_if { ::File.exists?("#{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']}") }
 end
 
 bash 'unpack_clonezilla' do
   user 'root'
-  cwd "#{tftpdir}/clonezilla"
-  code "unzip -j #{Chef::Config[:file_cache_path]}/#{czzip} " \
+  cwd "#{node['tftp']['directory']}/clonezilla"
+  code "unzip -j #{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']} " \
     'live/vmlinuz live/initrd.img live/filesystem.squashfs -d .'
-  not_if { ::File.exists?("#{tftpdir}/clonezilla/vmlinuz") }
+  not_if { ::File.exists?("#{node['tftp']['directory']}/clonezilla/vmlinuz") }
 end
 
 ## boot-menu
 #
-serverip = node['clonezilla']['serverip'] || node['ipaddress']
 
-appendline = 'boot=live config noswap nolocales edd=on nomodeset noprompt ' \
-             "keyboard-layouts=#{node['clonezilla']['kbdlayout']}"
 if node['clonezilla']['debug_boot']
-  appendline = "#{appendline} nosplash"
+  node.set['pxe']['appendline'] = "#{node['pxe']['node['pxe']['appendline']']} nosplash"
 else
-  appendline = "#{appendline} quiet"
+  node.set['pxe']['appendline'] = "#{node['pxe']['node['pxe']['appendline']']} quiet"
 end
 
 pxe_menu 'clonezillalive-restoredisk' do
@@ -72,12 +62,12 @@ pxe_menu 'clonezillalive-restoredisk' do
   label 'CZ Restore Disk'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
-    "#{serverip}:/media/clonezilla /home/partimag -o ro\" " \
+  append "#{node['pxe']['appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+    "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o ro\" " \
     "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
     "restoredisk ask_user ask_user\" ocs_live_extra_param=\"\" " \
     "ocs_live_batch=\"yes\" " \
-    "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
+    "fetch=tftp://#{node['clonezilla']['serverip']}/clonezilla/filesystem.squashfs"
 end
 
 pxe_menu 'clonezilla-restoreparts' do
@@ -85,12 +75,12 @@ pxe_menu 'clonezilla-restoreparts' do
   label 'CZ Restore Partitions'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
-    "#{serverip}:/media/clonezilla /home/partimag -o ro\" " \
+  append "#{node['pxe']['appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+    "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o ro\" " \
     "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
     "restoreparts ask_user ask_user\" ocs_live_extra_param=\"\" " \
     "ocs_live_batch=\"yes\" " \
-    "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
+    "fetch=tftp://#{node['clonezilla']['serverip']}/clonezilla/filesystem.squashfs"
 end
 
 pxe_menu 'clonezillalive' do
@@ -98,11 +88,11 @@ pxe_menu 'clonezillalive' do
   label 'Clonezilla Live'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
-    "#{serverip}:/media/clonezilla /home/partimag -o rw\" " \
+  append "#{node['pxe']['appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+    "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o rw\" " \
     "ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" " \
     "ocs_postrun1=\"sleep 10\" ocs_live_batch=\"no\" " \
-    "fetch=tftp://#{serverip}/clonezilla/filesystem.squashfs"
+    "fetch=tftp://#{node['clonezilla']['serverip']}/clonezilla/filesystem.squashfs"
 end
 
 ## nfs part
