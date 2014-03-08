@@ -23,3 +23,4 @@ default['clonezilla']['url'] = 'http://sourceforge.net/projects/clonezilla/files
 
 # Clonezilla download checksum
 default['clonezilla']['checksum'] = '3ab39169a1fdbdc89e61b943e8a7f39374babd53'
+
