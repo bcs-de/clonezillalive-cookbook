@@ -2,7 +2,7 @@
 default['nfs']['service']['portmap'] = 'rpcbind'
 
 # Default PXE options
-default['pxe']['appendline'] = 'boot=live config noswap nolocales edd=on nomodeset noprompt keyboard-layouts=us'
+default['clonezilla']['pxe_appendline'] = 'boot=live config noswap nolocales edd=on nomodeset noprompt keyboard-layouts=us'
 
 # Default tftp options
 default['tftp']['directory'] = "#{node['tftp']['directory']}"
@@ -15,12 +15,12 @@ default['clonezilla']['serverip'] = "#{node['ipaddress']}"
 default['clonezilla']['debug_boot'] = false
 
 # Which version of Clonezilla are we installing? If you wrap ['url']['fqdn'], you have to duplicate the values
-# that depend on it as well. That's how chef rolls.
-default['clonezilla']['version'] = '2.1.2-43'
-default['clonezilla']['file'] = "clonezilla-live-#{node['clonezilla']['version']}-i686-pae.zip"
+# that depend on it as well. That's how chef rolls. Version info, checksums, etc can be found at the URL below
+## http://clonezilla.org/downloads.php
+default['clonezilla']['version'] = '2.2.1-25'
+default['clonezilla']['file'] = "clonezilla-live-#{node['clonezilla']['version']}-amd64.zip"
 default['clonezilla']['url'] = 'http://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/' \
                                 "#{node['clonezilla']['version']}/#{node['clonezilla']['file']}/download"
 
 # Clonezilla download checksum
-default['clonezilla']['checksum'] = '3ab39169a1fdbdc89e61b943e8a7f39374babd53'
-
+default['clonezilla']['checksum'] = '7b4f73b0525a8b5303bd7804b7ce8f73398b9831'
