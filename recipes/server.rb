@@ -50,11 +50,12 @@ end
 
 ## boot-menu
 #
-
+appendline = "#{node['clonezilla']['append_line']} " \
+             "keyboard-layouts=#{node['clonezilla']['kbdlayout']}"
 if node['clonezilla']['debug_boot']
-  node.set['clonezilla']['pxe_appendline'] = "#{node['clonezilla']['pxe_appendline']} nosplash"
+ appendline = "#{appendline} nosplash"
 else
-  node.set['clonezilla']['pxe_appendline'] = "#{node['clonezilla']['pxe_appendline']} quiet"
+ appendline = "#{appendline} quiet"
 end
 
 pxe_menu 'clonezillalive-restoredisk' do
@@ -62,7 +63,7 @@ pxe_menu 'clonezillalive-restoredisk' do
   label 'CZ Restore Disk'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{node['clonezilla']['pxe_appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o ro\" " \
     "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
     "restoredisk ask_user ask_user\" ocs_live_extra_param=\"\" " \
@@ -75,7 +76,7 @@ pxe_menu 'clonezilla-restoreparts' do
   label 'CZ Restore Partitions'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{node['clonezilla']['pxe_appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o ro\" " \
     "ocs_live_run=\"ocs-sr -g auto -e1 auto -e2 -c -r -j2 -p true " \
     "restoreparts ask_user ask_user\" ocs_live_extra_param=\"\" " \
@@ -88,7 +89,7 @@ pxe_menu 'clonezillalive' do
   label 'Clonezilla Live'
   kernel 'clonezilla/vmlinuz'
   initrd 'clonezilla/initrd.img'
-  append "#{node['clonezilla']['pxe_appendline']} ocs_prerun1=\"sudo mount -t nfs " \
+  append "#{appendline} ocs_prerun1=\"sudo mount -t nfs " \
     "#{node['clonezilla']['serverip']}:/media/clonezilla /home/partimag -o rw\" " \
     "ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" " \
     "ocs_postrun1=\"sleep 10\" ocs_live_batch=\"no\" " \

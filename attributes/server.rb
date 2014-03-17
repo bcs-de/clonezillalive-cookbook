@@ -2,10 +2,11 @@
 default['nfs']['service']['portmap'] = 'rpcbind'
 
 # Default PXE options
-default['clonezilla']['pxe_appendline'] = 'boot=live config noswap nolocales edd=on nomodeset noprompt keyboard-layouts=us'
+default['clonezilla']['append_line'] = 'boot=live config noswap nolocales edd=on nomodeset noprompt'
+default['clonezilla']['kbdlayout'] = 'us'
 
-# Default tftp options
-default['tftp']['directory'] = "#{node['tftp']['directory']}"
+# Default tftp options, notice we are setting "dir". This is due to the pxe cookbook asking for that. Must be old code.
+default['tftp']['dir']  = "#{node['tftp']['directory']}"
 
 # IP of this server for the clients to use. Default is node['ipaddress'].
 # If you want this to be different, override it in your wrapper cookbook.
