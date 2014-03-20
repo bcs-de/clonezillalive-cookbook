@@ -34,10 +34,12 @@ include_recipe('nfs::server')
 end
 
 remote_file "#{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']}" do
-  source "#{node['clonezilla']['url']}"
-  checksum "#{node['clonezilla']['checksum']}"
+  source node['clonezilla']['url']
+  checksum node['clonezilla']['checksum']
   mode 00644
-  not_if { ::File.exists?("#{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']}") }
+  not_if do
+    ::File.exists?("#{Chef::Config[:file_cache_path]}/#{node['clonezilla']['file']}")
+  end
 end
 
 bash 'unpack_clonezilla' do
@@ -53,9 +55,9 @@ end
 appendline = "#{node['clonezilla']['append_line']} " \
              "keyboard-layouts=#{node['clonezilla']['kbdlayout']}"
 if node['clonezilla']['debug_boot']
- appendline = "#{appendline} nosplash"
+  appendline = "#{appendline} nosplash"
 else
- appendline = "#{appendline} quiet"
+  appendline = "#{appendline} quiet"
 end
 
 pxe_menu 'clonezillalive-restoredisk' do
