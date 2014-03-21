@@ -22,11 +22,7 @@ default['clonezilla']['debug_boot'] = false
 # rolls. Version info, checksums, etc can be found at the URL:
 # http://clonezilla.org/downloads.php
 default['clonezilla']['version'] = '2.2.1-25'
-default['clonezilla']['file'] = \
-  "clonezilla-live-#{node['clonezilla']['version']}-amd64.zip"
-default['clonezilla']['url'] = \
-  'http://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/' \
-  "#{node['clonezilla']['version']}/#{node['clonezilla']['file']}/download"
-
-# Clonezilla download checksum
-default['clonezilla']['checksum'] = '7b4f73b0525a8b5303bd7804b7ce8f73398b9831'
+default['clonezilla']['architecture'] = 'i686-pae'
+default['clonezilla']['checksum'] = ''
+default['clonezilla']['file'] = ''
+default['clonezilla']['url'] = ''

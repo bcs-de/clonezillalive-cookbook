@@ -37,14 +37,17 @@ By default clonezilla boots with `quiet` added to the appendline. With this attr
 #### node\['clonezilla'\]\['version'\] = '2.2.1-25'
 The version of clonezilla to install.
 
+#### node\['clonezilla'\]\['architecture'\] = 'i686-pae'
+The processor architecture to use for the clonezilla netboot. Can be different from the servers own architecture. Clonezilla has images for 'i486', 'i686-pae' and 'amd64'.
+
 #### node\['clonezilla'\]\['checksum'\] = '&lt;checksum\_of\_2.2.1-25&gt;'
-The corresponding md5-checksum of the clonezilla-version to verify the download.
+The corresponding md5-checksum of the clonezilla-version to verify the download. Unless you change the version for clonezilla to a version not yet incorporated in this recipe, there should be no need to set this attribute.
 
 #### node\['clonezilla'\]\['file'\]
-Customized name of the file to download. Defaults to `clonezilla-live-#{node['clonezilla']['version']}-amd64.zip`.
+Customized name of the file to download. Defaults to `clonezilla-live-#{node['clonezilla']['version']}-{#node['clonezilla']['architecture']}.zip`. Unless you want to download a custom clonezilla (from a custom location) there should be no need to set this attribute.
 
 #### node\['clonezilla'\]\['url'\]
-Customized download url. Defaults to `http://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/#{node['clonezilla']['version']}/#{node['clonezilla']['file']}/download`.
+Customized download url. Defaults to `http://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/#{node['clonezilla']['version']}/#{node['clonezilla']['file']}/download`. Unless you want to download a custom clonezilla (from a custom location) there should be no need to set this attribute.
 
 Usage
 -----
