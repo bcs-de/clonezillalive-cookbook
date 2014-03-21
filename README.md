@@ -75,4 +75,5 @@ Standard opensource cookbook rules apply:
 License and Authors
 -------------------
 Authors: Arnold Krille (for bcs kommunikationslösungen)
+
 Contributors: Brent Stephens (Outloud Industries, LLC)
